@@ -5,11 +5,17 @@
     <TargetFramework>net7.0-windows10.0.22621</TargetFramework>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PublishAot>true</PublishAot>
   </PropertyGroup>
 
-  <ItemGroup>
-    <RdXmlFile Include="Default.rd.xml" />
+  <PropertyGroup Condition="'$(ENABLE_PUBLISH_AOT)' == 'true'">
+    <PublishAot>true</PublishAot>
+    <UseSystemResourceKeys>true</UseSystemResourceKeys>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
+  </PropertyGroup>
+    
+  <ItemGroup Condition="'$(ENABLE_PUBLISH_AOT)' == 'true'">
+    <RdXmlFile Include="Properties\Default.rd.xml" />
   </ItemGroup>
 
   <ItemGroup>
