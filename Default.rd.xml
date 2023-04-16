@@ -6,6 +6,9 @@
         <Method Name="As" Dynamic="Required All">
           <GenericArgument Name="ABI.Microsoft.Graphics.Canvas.ICanvasFactoryNative+Interface+Vftbl, Win2DRenderer" />
         </Method>
+        <Method Name="As" Dynamic="Required All">
+          <GenericArgument Name="ABI.System.IDisposable+Vftbl, WinRT.Runtime" />
+        </Method>
       </Type>
     </Assembly>
   </Application>
