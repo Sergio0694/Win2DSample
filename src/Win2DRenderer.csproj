@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <OutputType Condition="'$(HIDE_CONSOLE)' == 'true'">WinExe</OutputType>
     <TargetFramework>net7.0-windows10.0.22621</TargetFramework>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -12,7 +13,7 @@
     <PublishAot>true</PublishAot>
     <UseSystemResourceKeys>true</UseSystemResourceKeys>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
+    <IlcOptimizationPreference>size</IlcOptimizationPreference>
   </PropertyGroup>
     
   <ItemGroup Condition="'$(ENABLE_PUBLISH_AOT)' == 'true'">
