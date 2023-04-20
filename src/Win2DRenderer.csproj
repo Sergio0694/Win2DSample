@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.4-CI-230415.0" />
+    <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.1.0-preview1" />
     <PackageReference Include="TerraFX.Interop.Windows" Version="10.0.22621.1" />
   </ItemGroup>
 
