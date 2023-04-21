@@ -121,7 +121,7 @@ internal sealed class Win32Application
             {
                 ICanvasFactoryNative.Interface canvasDeviceActivationFactory = CanvasDevice.As<ICanvasFactoryNative.Interface>();
 
-                canvasFactoryNativeUnknown.Attach((IUnknown*)MarshalInspectable<ICanvasFactoryNative.Interface>.FromManaged(canvasDeviceActivationFactory));
+                canvasFactoryNativeUnknown.Attach((IUnknown*)MarshalInterface<ICanvasFactoryNative.Interface>.FromManaged(canvasDeviceActivationFactory));
 
                 hresult = canvasFactoryNativeUnknown.CopyTo(canvasFactoryNative.GetAddressOf());
 
