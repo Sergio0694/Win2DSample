@@ -23,7 +23,7 @@ internal sealed class Win32Application
     /// <summary>
     /// The <see cref="CanvasDevice"/> instance to use.
     /// </summary>
-    private CanvasDevice? canvasDevice;
+    private readonly CanvasDevice canvasDevice;
 
     /// <summary>
     /// The <see cref="CanvasSwapChain"/> instance to use to render frames.
@@ -51,6 +51,15 @@ internal sealed class Win32Application
     public event EventHandler<DrawEventArgs>? Draw;
 
     /// <summary>
+    /// Creates a new <see cref="Win32Application"/> instance with the specified parameters.
+    /// </summary>
+    /// <param name="canvasDevice">The <see cref="CanvasDevice"/> instance to use.</param>
+    public Win32Application(CanvasDevice canvasDevice)
+    {
+        this.canvasDevice = canvasDevice;
+    }
+
+    /// <summary>
     /// Initializes the current application.
     /// </summary>
     /// <param name="hwnd">The handle for the window.</param>
@@ -59,7 +68,6 @@ internal sealed class Win32Application
     public unsafe void OnInitialize(HWND hwnd)
     {
         // Create a new canvas device, which will handle DX11/D2D initialization
-        CanvasDevice canvasDevice = new();
         CanvasSwapChain canvasSwapChain;
 
         // Create the swap chain to display frames
@@ -74,7 +82,7 @@ internal sealed class Win32Application
             using (ComPtr<IUnknown> canvasDeviceUnknown = default)
             using (ComPtr<IDirect3DDxgiInterfaceAccess> direct3DDxgiInterfaceAccess = default)
             {
-                canvasDeviceUnknown.Attach((IUnknown*)MarshalInspectable<CanvasDevice>.FromManaged(canvasDevice));
+                canvasDeviceUnknown.Attach((IUnknown*)MarshalInspectable<CanvasDevice>.FromManaged(this.canvasDevice));
 
                 hresult = canvasDeviceUnknown.CopyTo(direct3DDxgiInterfaceAccess.GetAddressOf());
 
@@ -148,7 +156,6 @@ internal sealed class Win32Application
         }
 
         // Save the Win2D objects for later use
-        this.canvasDevice = canvasDevice;
         this.canvasSwapChain = canvasSwapChain;
     }
 

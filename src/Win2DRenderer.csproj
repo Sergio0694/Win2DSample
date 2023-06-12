@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <OutputType Condition="'$(HIDE_CONSOLE)' == 'true'">WinExe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows10.0.22621</TargetFramework>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Nullable>enable</Nullable>
@@ -21,8 +20,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ComputeSharp.D2D1.WinUI" Version="2.1.0-preview2" />
     <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.1.0-preview1" />
     <PackageReference Include="TerraFX.Interop.Windows" Version="10.0.22621.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Assets\heightmap.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\texture.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

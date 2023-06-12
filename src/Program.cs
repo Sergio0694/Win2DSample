@@ -1,16 +1,39 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using ComputeSharp.D2D1.WinUI;
+using Microsoft.Graphics.Canvas;
 using Win2DRenderer.Backend;
-using Windows.UI;
+using Win2DRenderer.Shaders;
 
 [assembly: DisableRuntimeMarshalling]
 
-Win32Application win32Application = new();
+string applicationDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+string texturePath = Path.Combine(applicationDirectory, "Assets", "texture.png");
+string heightmapPath = Path.Combine(applicationDirectory, "Assets", "heightmap.png");
 
-win32Application.Draw += static (_, e) =>
+// Load the two bitmaps we need
+CanvasBitmap texture = await CanvasBitmap.LoadAsync(CanvasDevice.GetSharedDevice(), texturePath);
+CanvasBitmap heightmap = await CanvasBitmap.LoadAsync(CanvasDevice.GetSharedDevice(), heightmapPath);
+
+// Create the effect and bind the input bitmaps
+PixelShaderEffect<HeightmapShader> effect = new()
 {
+    Sources = { [0] = texture, [1] = heightmap }
+};
+
+Win32Application win32Application = new(CanvasDevice.GetSharedDevice());
+
+win32Application.Draw += (_, e) =>
+{
+    // Update the shader constant buffer
+    effect.ConstantBuffer = new HeightmapShader(
+        time: (float)e.TotalTime.TotalSeconds,
+        factors: new float3(0, 2, 4));
+
     // Draw frames here...
-    e.DrawingSession.DrawEllipse(155, 115, 80, 30, Color.FromArgb(a: 255, r: 0, g: 148, b: 255), 3);
-    e.DrawingSession.DrawText("Hello, world!", 100, 100, Color.FromArgb(a: 255, r: 255, g: 216, b: 0));
+    e.DrawingSession.DrawImage(effect);
 };
 
 return Win32ApplicationRunner.Run(win32Application, "Win2D sample");
